@@ -3,21 +3,23 @@ services:
   - docker
 
 before_install:
-  - docker build -t dquez/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t angurana/react-test -f ./client/Dockerfile.dev ./client
 
 script: 
-  - docker run dquez/react-test npm test -- --coverage
+  - docker run angurana/react-test npm test -- --coverage
 
 after_success:
-  - docker build -t dquez/multi-client ./client
-  - docker build -t dquez/multi-nginx ./nginx
-  - docker build -t dquez/multi-api ./api
-  - docker build -t dquez/multi-worker ./worker
+  - docker build -t angurana/multi-client ./client
+  - docker build -t angurana/multi-nginx ./nginx
+  - docker build -t angurana/multi-server ./server
+  - docker build -t angurana/multi-worker ./worker
+  #- docker build -t angurana/multi-api ./api
+  # log in to docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  - docker push dquez/multi-client
-  - docker push dquez/multi-nginx
-  - docker push dquez/multi-api
-  - docker push dquez/multi-worker 
+  - docker push angurana/multi-client
+  - docker push angurana/multi-nginx
+  - docker push angurana/multi-server
+  - docker push angurana/multi-worker 
 
 deploy:
   provider: elasticbeanstalk
