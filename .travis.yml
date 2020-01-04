@@ -13,25 +13,12 @@ after_success:
   - docker build -t angurana/multi-nginx ./nginx
   - docker build -t angurana/multi-server ./server
   - docker build -t angurana/multi-worker ./worker
-  #- docker build -t angurana/multi-api ./api
-  # log in to docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker push angurana/multi-client
   - docker push angurana/multi-nginx
   - docker push angurana/multi-server
   - docker push angurana/multi-worker 
 
-deploy:
-  provider: elasticbeanstalk
-  region: us-east-1
-  app: multi-docker
-  env: MultiDocker-env
-  bucket_name: elasticbeanstalk-us-east-1-172287926365
-  bucket_path: multi-docker
-  on:
-    branch: master
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key:
-    secure: $AWS_SECRET_KEY
+ 
 
     
